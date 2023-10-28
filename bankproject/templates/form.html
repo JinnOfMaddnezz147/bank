@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1 style="text-align:center;padding:25px;">Bank Form</h1>
+        <form method="post" style="font-size: 15px;background-color: rgba(255, 255, 255, 0.7);width: 50%;text-align: center;margin: 0 auto;padding:20px;">
+            {% csrf_token %}
+            <input type="text" name="first_name" placeholder="Enter your first name" style="margin-bottom: 5px;"><br>
+            <input type="text" name="last_name" placeholder="Enter you last name" style="margin-bottom: 5px;"><br>
+            <input type="date" name="date_of_birth" placeholder="Enter your date of birth" style="margin-bottom: 5px;"><br>
+            <input type="number" name="age" placeholder="Enter Your Age" style="margin-bottom: 5px;"><br>
+
+        <label style="background-color:white;padding:5px;margin-bottom: 5px;">
+
+            <input type="radio" name="gender" value="male"> Male
+        </label>
+
+        <label style="background-color:white;padding:5px;margin-bottom: 5px;">
+            <input type="radio" name="gender" value="female"> Female
+        </label><br>
+            <input type="tel" name="phone_number" placeholder="Enter your phone number" style="margin-bottom: 5px;"><br>
+            <input type="email" name="email" placeholder="Enter your email id" style="margin-bottom: 5px;"><br>
+            <input type="text" name="address" placeholder="Enter your address" style="margin-bottom: 5px;"><br>
+            <label for="district">Select your District:</label><br>
+        <select id="district" name="district" onchange="updateBranches()" style="margin-bottom: 5px;">
+            <option value="">Select District</option>
+            <option value="ernakulam">Ernakulam</option>
+            <option value="kollam">Kollam</option>
+            <option value="trivandrum">Trivandrum</option>
+            <option value="thrissur">Thrissur</option>
+            <option value="idukki">Idukki</option>
+        </select><br>
+
+        <label for="branch">Select your Branch:</label><br>
+            <select id="branch" name="branch" style="margin-bottom: 5px;">
+                <option value="">Select Branch</option>
+            </select>
+
+        <script>
+            const branchOptions = {
+                ernakulam: ["Aluva", "Edapally", "Kakkanad", "Kalamassery"],
+                kollam: ["Chinnakada", "Kottarakara", "Karunagappally", "Paravur"],
+                trivandrum: ["Pettah", "Attingal", "Neyyattinkara", "Varkala"],
+                thrissur: ["Kuriachira", "Poothole", "Chalakudy", "Wadakanchery"],
+                idukki: ["Munnar", "Thodupuzha", "Adimali", "Nedumkandam"]
+            };
+
+            function updateBranches() {
+                const districtSelect = document.getElementById("district");
+                const branchSelect = document.getElementById("branch");
+                const selectedDistrict = districtSelect.value;
+
+                branchSelect.innerHTML = '<option value="">Select Branch</option>';
+
+                if (selectedDistrict && branchOptions[selectedDistrict]) {
+                    branchOptions[selectedDistrict].forEach(branch => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = branch;
+                        optionElement.textContent = branch;
+                        branchSelect.appendChild(optionElement);
+                    });
+                }
+            }
+        </script><br>
+        <select name="account_type" style="margin-bottom: 5px;">
+            <option>Select The Account type</option>
+            <option>Savings Account</option>
+            <option>Current Account</option>
+            <option>Money Market Account</option>
+            <option>Corporate Account</option>
+            <option>Government Account</option>
+        </select><br>
+            <select name="materials" style="margin-bottom: 5px;">
+            <option>Select The Material to be submitted</option>
+            <option>Debit Card</option>
+            <option>Credit Card</option>
+            <option>Cheque Book</option>
+            <option>NFC</option>
+            <option>Crypto Currency</option>
+        </select><br>
+
+            <input type="submit" style="margin-bottom: 5px;">
+            <a href="{% url 'logouttomenu' %}" style="display: inline-block;
+    padding: 5px 10px;
+    background-color: #0074D9;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;">Logout</a>
+
+        </form>
+{% for msg in messages %}
+<h2 style="text-align:center;background-color:white;color:red;">{{msg}}</h2>
+{% endfor %}
+{% endblock %}

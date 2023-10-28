@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1 style="text-align:center;padding:30px;">Registration Form</h1>
+
+        <form method="post" style="font-size: 15px;text-align: center;">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Enter your user name" style="margin-bottom: 5px;"><br>
+            <input type="text" name="first_name" placeholder="Enter your first name" style="margin-bottom: 5px;"><br>
+            <input type="text" name="last_name" placeholder="Enter you last name" style="margin-bottom: 5px;"><br>
+            <input type="email" name="email" placeholder="Enter your email id" style="margin-bottom: 5px;"><br>
+            <input type="password" name="password" placeholder="Enter your password" style="margin-bottom: 5px;"><br>
+            <input type="password" name="password1" placeholder="Confirm your password" style="margin-bottom: 5px;"><br>
+            <input type="submit" style="margin-bottom: 5px;"><br>
+        </form>
+{% for msg in messages %}
+<h2>{{msg}}</h2>
+{% endfor %}
+{% endblock %}
